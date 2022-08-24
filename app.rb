@@ -14,13 +14,15 @@ class App
   end
 
   def display_books
-    books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
+    books.each_with_index do |book, index|
+      puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}"
+    end
   end
 
   def display_people
-    persons.each do |person|
+    persons.each_with_index do |person, index|
       type = person.is_a?(Student) ? 'Student' : 'Teacher'
-      puts "[#{type}] Name: #{person.name}, ID: #{person.id}, Age #{person.age}"
+      puts "#{index})  [#{type}] Name: #{person.name}, ID: #{person.id}, Age #{person.age}"
     end
   end
 
