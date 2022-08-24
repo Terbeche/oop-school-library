@@ -24,7 +24,7 @@ class App
     end
   end
 
-  def create_person(age, name, parent_permission, type)
+  def create_person(age, name, parent_permission, type, _specialization = nil)
     case type
     when 'student'
       student = Student.new(age, name, parent_permission)
