@@ -5,7 +5,7 @@ def main()
 
   # menu
 
-  choice get.chomp
+  choice gets.chomp
 
   case choice
   when 1
@@ -70,6 +70,10 @@ def creat_rental
   person = gets.chomp
   print 'Date: '
   date = gets.chomp
+
+  book = books[book]
+  person = persons[person]
+
   app.create_rental(date, person, book)
   puts 'Rental created successfully'
 end
