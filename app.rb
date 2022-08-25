@@ -1,16 +1,18 @@
-require './person'
-require './book'
-require './rental'
-require './student'
-require './teacher'
+require_relative './person'
+require_relative './book'
+require_relative './rental'
+require_relative './student'
+require_relative './teacher'
 
 class App
+  attr_reader :books, :persons
+
   def initialize
     @books = []
     @persons = []
     @teachers = []
     @students = []
-    @rantals = []
+    @rentals = []
   end
 
   def display_books
@@ -26,7 +28,7 @@ class App
     end
   end
 
-  def create_person(age, name, parent_permission, type, _specialization = nil)
+  def create_person(type, age, name, parent_permission, specialization = nil)
     case type
     when 'student'
       student = Student.new(age, name, parent_permission)
@@ -34,7 +36,7 @@ class App
       @students.push(student)
 
     when 'teacher'
-      teacher = Teacher.new(age, name, parent_permission)
+      teacher = Teacher.new(age, name, parent_permission, specialization)
       @persons.push(teacher)
       @teachers.push(teacher)
     end
