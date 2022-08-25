@@ -1,17 +1,17 @@
 require './app'
+APP = App.new
 
+# rubocop:disable Metrics/CyclomaticComplexity
 def main()
-  app = App.new
-
-  # menu
+  menu
 
   choice gets.chomp
 
   case choice
   when 1
-    app.display_books
+    APP.display_books
   when 2
-    app.display_people
+    APP.display_people
   when 3
     create_person
 
@@ -28,6 +28,7 @@ def main()
     exit
   end
 end
+# rubocop:enable Metrics/CyclomaticComplexity
 
 def create_person
   print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
@@ -48,7 +49,7 @@ def create_person
   else
     puts "You haven't enter a right choice!"
   end
-  app.create_person(age, name, parent_permission, type, specialization)
+  APP.create_person(age, name, parent_permission, type, specialization)
   puts 'Person created successfully'
 end
 
@@ -57,16 +58,16 @@ def create_book
   title = gets.chomp
   print 'Author: '
   author = gets.chomp
-  app.create_book(title, author)
+  APP.create_book(title, author)
   puts 'Bok created successfully'
 end
 
 def creat_rental
   puts 'Select a book from the following list by number'
-  app.display_books
+  APP.display_books
   book = gets.chomp
   puts 'Select a person from the following list by number(not id)'
-  app.display_people
+  APP.display_people
   person = gets.chomp
   print 'Date: '
   date = gets.chomp
@@ -74,7 +75,7 @@ def creat_rental
   book = books[book]
   person = persons[person]
 
-  app.create_rental(date, person, book)
+  APP.create_rental(date, person, book)
   puts 'Rental created successfully'
 end
 
@@ -82,13 +83,13 @@ def display_rentals
   puts 'Id of person: '
   id = gets.chomp
 
-  our_person = app.persons.select { |person| person.id == id }.first
+  our_person = APP.persons.select { |person| person.id == id }.first
   rentals = our_person.rentals
 
   if rentals.nil?
     puts 'There is no rentals with this ID'
   else
-    app.display_rentals(rentals)
+    APP.display_rentals(rentals)
   end
 end
 
