@@ -21,7 +21,6 @@ class App
   include PersistBooks
   include PersistRental
   include PersistPeople
-
   def check(choice)
     case choice
     when 1
@@ -65,13 +64,13 @@ class App
     end
   end
 
-  def create_person(type, age, name, parent_permission = true, specialization = nil)
+  def create_person(type, age, name, parent_permission, specialization = nil)
     case type
     when 'student'
-      student = Student.new(age, name, parent_permission: parent_permission)
+      student = Student.new(age, name, parent_permission)
       @persons.push(student)
     when 'teacher'
-      teacher = Teacher.new(age, specialization, name, true)
+      teacher = Teacher.new(age, specialization, name)
       @persons.push(teacher)
     end
   end
