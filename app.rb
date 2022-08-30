@@ -4,6 +4,7 @@ require_relative './rental'
 require_relative './student'
 require_relative './teacher'
 require_relative './helper'
+require_relative './persist_files/persist_books'
 
 Helper = Helper.new
 class App
@@ -70,6 +71,7 @@ class App
     choice = gets.chomp.strip.to_i
     APP.check(choice)
   end
+  store_books(@books)
   end
   def menu
     puts 'Please chose an option by entering a number:'
