@@ -96,6 +96,6 @@ class App
       APP.check(choice)
     end
     store_books(@books)
-    store_Rentals(@rentals)
+    store_rentals(@rentals)
   end
 end

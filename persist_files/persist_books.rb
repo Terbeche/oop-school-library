@@ -2,25 +2,25 @@ require 'json'
 
 module PersistBooks
   def store_books(books)
-    booksArray = []
+    books_array = []
     file = './json_files/books.json'
     return unless File.exist?(file)
 
     books.each do |book|
-      booksArray << { title: book.title, author: book.author }
+      books_array << { title: book.title, author: book.author }
     end
-    File.write(file, JSON.generate(booksArray))
+    File.write(file, JSON.generate(books_array))
   end
 
   def fetch_books
-    booksArray = []
+    books_array = []
     file = './json_files/books.json'
-    return booksArray unless File.exist?(file) && File.read(file) != ''
+    return books_array unless File.exist?(file) && File.read(file) != ''
 
     JSON.parse(File.read(file)).each do |book|
-      booksArray << Book.new(book['title'], book['author'])
+      books_array << Book.new(book['title'], book['author'])
     end
 
-    booksArray
+    books_array
   end
 end
