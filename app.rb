@@ -6,6 +6,7 @@ require_relative './teacher'
 require_relative './helper'
 require_relative './persist_files/persist_books'
 require_relative './persist_files/persist_rental'
+require_relative './persist_files/persist_people'
 
 Helper = Helper.new
 class App
@@ -13,12 +14,13 @@ class App
 
   def initialize
     @books = fetch_books
-    @persons = []
+    @persons = fetch_people
     @rentals = fetch_rentals
   end
 
   include PersistBooks
   include PersistRental
+  include PersistPeople
 
   def check(choice)
     case choice
@@ -63,13 +65,13 @@ class App
     end
   end
 
-  def create_person(type, age, name, parent_permission, specialization = nil)
+  def create_person(type, age, name, parent_permission = true, specialization = nil)
     case type
     when 'student'
-      student = Student.new(age, name, parent_permission)
+      student = Student.new(age, name, parent_permission: parent_permission)
       @persons.push(student)
     when 'teacher'
-      teacher = Teacher.new(age, name, parent_permission, specialization)
+      teacher = Teacher.new(age, specialization, name, true)
       @persons.push(teacher)
     end
   end
@@ -97,5 +99,6 @@ class App
     end
     store_books(@books)
     store_rentals(@rentals)
+    store_people(@persons)
   end
 end
