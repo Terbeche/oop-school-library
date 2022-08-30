@@ -10,8 +10,6 @@ class App
   def initialize
     @books = []
     @persons = []
-    @teachers = []
-    @students = []
     @rentals = []
   end
 
@@ -33,12 +31,10 @@ class App
     when 'student'
       student = Student.new(age, name, parent_permission)
       @persons.push(student)
-      @students.push(student)
 
     when 'teacher'
       teacher = Teacher.new(age, name, parent_permission, specialization)
       @persons.push(teacher)
-      @teachers.push(teacher)
     end
   end
 
