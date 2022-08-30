@@ -10,10 +10,13 @@ Helper = Helper.new
 class App
   attr_reader :books, :persons
   def initialize
-    @books = []
+    @books = fetch_books
     @persons = []
     @rentals = []
   end
+
+include PersistBooks
+
   def display_books
     books.each_with_index do |book, index|
       puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}"
