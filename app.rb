@@ -5,50 +5,21 @@ require_relative './student'
 require_relative './teacher'
 require_relative './helper'
 require_relative './persist_files/persist_books'
+require_relative './persist_files/persist_rental'
 
 Helper = Helper.new
 class App
   attr_reader :books, :persons
+
   def initialize
     @books = fetch_books
     @persons = []
-    @rentals = []
+    @rentals = fetch_rentals
   end
 
-include PersistBooks
+  include PersistBooks
+  include PersistRental
 
-  def display_books
-    books.each_with_index do |book, index|
-      puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}"
-    end
-  end
-  def display_people
-    persons.each_with_index do |person, index|
-      type = person.is_a?(Student) ? 'Student' : 'Teacher'
-      puts "#{index})  [#{type}] Name: #{person.name}, ID: #{person.id}, Age #{person.age}"
-    end
-  end
-  def create_person(type, age, name, parent_permission, specialization = nil)
-    case type
-    when 'student'
-      student = Student.new(age, name, parent_permission)
-      @persons.push(student)
-    when 'teacher'
-      teacher = Teacher.new(age, name, parent_permission, specialization)
-      @persons.push(teacher)
-    end
-  end
-  def create_book(title, author)
-    book = Book.new(title, author)
-    @books.push(book)
-  end
-  def create_rental(date, person, book)
-    rental = Rental.new(date, person, book)
-    @rentals.push(rental)
-  end
-  def display_rentals(rentals)
-    rentals.each { |rental| puts "Date: #{rental.date}, Book #{rental.book.title}, by #{rental.book.author}" }
-  end
   def check(choice)
     case choice
     when 1
@@ -67,15 +38,7 @@ include PersistBooks
       puts 'Thanks for using the Application!!'
     end
   end
-  def run
-    choice = 0
-  while choice != 7
-    menu
-    choice = gets.chomp.strip.to_i
-    APP.check(choice)
-  end
-  store_books(@books)
-  end
+
   def menu
     puts 'Please chose an option by entering a number:'
     puts '1 - List all books'
@@ -85,5 +48,54 @@ include PersistBooks
     puts '5 - Create a rental'
     puts '6 - List all rentals for a given person id'
     puts '7 - Exit'
+  end
+
+  def display_books
+    books.each_with_index do |book, index|
+      puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}"
+    end
+  end
+
+  def display_people
+    persons.each_with_index do |person, index|
+      type = person.is_a?(Student) ? 'Student' : 'Teacher'
+      puts "#{index})  [#{type}] Name: #{person.name}, ID: #{person.id}, Age #{person.age}"
+    end
+  end
+
+  def create_person(type, age, name, parent_permission, specialization = nil)
+    case type
+    when 'student'
+      student = Student.new(age, name, parent_permission)
+      @persons.push(student)
+    when 'teacher'
+      teacher = Teacher.new(age, name, parent_permission, specialization)
+      @persons.push(teacher)
+    end
+  end
+
+  def create_book(title, author)
+    book = Book.new(title, author)
+    @books.push(book)
+  end
+
+  def create_rental(date, person, book)
+    rental = Rental.new(date, person, book)
+    @rentals.push(rental)
+  end
+
+  def display_rentals(rentals)
+    rentals.each { |rental| puts "Date: #{rental.date}, Book #{rental.book.title}, by #{rental.book.author}" }
+  end
+
+  def run
+    choice = 0
+    while choice != 7
+      menu
+      choice = gets.chomp.strip.to_i
+      APP.check(choice)
+    end
+    store_books(@books)
+    store_Rentals(@rentals)
   end
 end
