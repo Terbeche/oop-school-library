@@ -4,41 +4,36 @@ require_relative './helper'
 APP = App.new
 Helper = Helper.new
 
-# rubocop:disable Metrics/MethodLength
-# rubocop:disable Metrics/CyclomaticComplexity
 def main()
   choice = 0
-  while choice != 7 
-     menu
-     choice = gets.chomp.strip.to_i
-     check(choice)
+  while choice != 7
+    menu
+    choice = gets.chomp.strip.to_i
+    check(choice)
   end
 end
 
 def check(choice)
-  
   case choice
   when 1
     APP.display_books
-    
+
   when 2
     APP.display_people
-    
+
   when 3
     Helper.create_person
-    
+
   when 4
     Helper.create_book
-    
+
   when 5
     Helper.create_rental
-    
+
   when 6
     Helper.display_rentals
-    
-  when 7
-    puts 'Thank you for using this app'
-    exit
+  else
+    puts 'Thanks for using the Application!!'
   end
 end
 
@@ -51,9 +46,5 @@ def menu
   puts '5 - Create a rental'
   puts '6 - List all rentals for a given person id'
   puts '7 - Exit'
-
 end
-
-# rubocop:enable Metrics/MethodLength
-# rubocop:enable Metrics/CyclomaticComplexity
 main
