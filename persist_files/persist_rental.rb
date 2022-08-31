@@ -7,7 +7,7 @@ module PersistRental
     return unless File.exist?(file)
 
     rentals.each do |rental|
-      rental_array << { date: rental.date, person: rental.book.author, book: rental.book.title }
+      rental_array << { date: rental.date, person: rental.person, book: rental.book }
     end
     File.write(file, JSON.generate(rental_array))
   end
@@ -18,7 +18,7 @@ module PersistRental
     return rental_array unless File.exist?(file) && File.read(file) != ''
 
     JSON.parse(File.read(file)).each do |rental|
-      rental_array << Rental.new(rental['date'], rental['person'], rental['book'])
+      rental_array << Rental.new(rental['date'], rental[person], rental[book])
     end
 
     rental_array
